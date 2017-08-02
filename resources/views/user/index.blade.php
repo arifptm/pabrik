@@ -1,10 +1,12 @@
 @extends('layouts.master')
 
 @section('content-title')
-	<h1>
-        Page Header
-        <small>Optional description</small>
-   	</h1>
+	<h1 class="pull-left">
+      Users<small>Optional description</small>
+  </h1>
+  <div class="text-right">
+    <a href="/manage/users/create" class=" btn-primary btn"><i class="fa fa-plus-circle"></i> Tambah User</a>
+  </div>
 
 <!--     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -13,7 +15,17 @@
 @endsection
 
 
-@section('content')    
+@section('content')   
+
+          <div class="alert alert-success alert-dismissible">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+              @if(Session::has($msg))
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+              @endif
+          @endforeach
+          </div>
+
+ 
       <div class="row">
         <div class="col-md-12">
           <div class="box">
@@ -40,10 +52,10 @@
 							@endforeach
 						</td>
 						<td>
-			                {!! Form::open(['url' => ['/manage/users/destroy', $user->id], 'method' => 'delete']) !!}
+			                {!! Form::open(['url' => '/manage/users/'.$user->id, 'method' => 'delete']) !!}
 			                <div class='btn-group'>
-			                    <a href="/manage/user/{{$user->id}}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-			                    <a href="/manage/user/{{$user->id}}/edit" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+			                    <a href="/manage/users/{{$user->id}}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+			                    <a href="/manage/users/{{$user->id}}/edit" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
 			                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
 			                </div>
 			                {!! Form::close() !!}
